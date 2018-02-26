@@ -21,7 +21,7 @@ class AvatarBehavior extends \asinfotrack\yii2\attachments\behaviors\AttachmentB
 	 */
 	public function getAvatarQuery()
 	{
-		return Attachment::find()->subject($this->owner)->isAvatar(true)->mimeTypes($this->avatarMimeTypes);
+		return $this->getAttachmentQuery()->isAvatar(true)->mimeTypes($this->avatarMimeTypes);
 	}
 
 	/**

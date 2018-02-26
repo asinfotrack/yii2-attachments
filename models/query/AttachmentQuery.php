@@ -17,7 +17,7 @@ class AttachmentQuery extends \yii\db\ActiveQuery
 	 * Named scope to filter by subject
 	 *
 	 * @param \yii\db\ActiveRecord $model the subject model
-	 * @return \asinfotrack\yii2\attachments\models\query\AttachmentQuery
+	 * @return \asinfotrack\yii2\attachments\models\query\AttachmentQuery self for chaining
 	 */
 	public function subject($model)
 	{
@@ -31,7 +31,7 @@ class AttachmentQuery extends \yii\db\ActiveQuery
 	 * Entries can be a mix of strings containing class names or instances directly
 	 *
 	 * @param string|string[]|\yii\db\ActiveRecord|\yii\db\ActiveRecord[] $models the model class or their class names
-	 * @return \asinfotrack\yii2\attachments\models\query\AttachmentQuery
+	 * @return \asinfotrack\yii2\attachments\models\query\AttachmentQuery self for chaining
 	 */
 	public function modelTypes($models)
 	{
@@ -48,10 +48,10 @@ class AttachmentQuery extends \yii\db\ActiveQuery
 	}
 
 	/**
-	 * Named scope to filter by mime types
+	 * Named scope to filter certain mime types
 	 *
-	 * @param string|string[] $mimeTypes the mime types to filter
-	 * @return $this
+	 * @param string[] $mimeTypes the mime types to filter
+	 * @return \asinfotrack\yii2\attachments\models\query\AttachmentQuery self for chaining
 	 */
 	public function mimeTypes($mimeTypes)
 	{
@@ -61,10 +61,21 @@ class AttachmentQuery extends \yii\db\ActiveQuery
 	}
 
 	/**
+	 * Named scope to filter images only
+	 *
+	 * @return \asinfotrack\yii2\attachments\models\query\AttachmentQuery self for chaining
+	 */
+	public function imagesOnly()
+	{
+		$this->andWhere(['LIKE', 'attachment.mime_type', 'image/%', false]);
+		return $this;
+	}
+
+	/**
 	 * Named scope to filter only result files
 	 *
 	 * @param boolean $isAvatar whether or not to filter attachments
-	 * @return \asinfotrack\yii2\attachments\models\query\AttachmentQuery
+	 * @return \asinfotrack\yii2\attachments\models\query\AttachmentQuery self for chaining
 	 */
 	public function isAvatar($isAvatar=true)
 	{
