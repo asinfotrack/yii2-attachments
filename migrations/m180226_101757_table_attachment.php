@@ -7,7 +7,7 @@
  * @link http://www.asinfotrack.ch
  * @license AS infotrack AG license / MIT, see provided license file
  */
-class m180226101757_table_attachment extends \asinfotrack\yii2\toolbox\console\Migration
+class m180226_101757_table_attachment extends \asinfotrack\yii2\toolbox\console\Migration
 {
 
 	/**
