@@ -1,5 +1,5 @@
 {
-	"name": "asinfotrack/Yii2-attachments",
+	"name": "asinfotrack/yii2-attachments",
 	"type": "yii2-extension",
 
 	"description": "Yii2-attachments is a module and set of functionality to add attachments to a model in a generic way",
