@@ -1,8 +1,6 @@
 <?php
 namespace asinfotrack\yii2\attachments\behaviors;
 
-use asinfotrack\yii2\attachments\models\Attachment;
-
 class AvatarBehavior extends \asinfotrack\yii2\attachments\behaviors\AttachmentBehavior
 {
 
