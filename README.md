@@ -44,7 +44,7 @@ To remove the table just do the same migration downwards.
             'userRelationCallback'=>function ($model, $attribute) {
                 return $model->hasOne('app\models\User', ['id'=>$attribute]);
             },
-            'backendAccessControl' = [
+            'backendAccessControl'=>[
                 'class'=>'yii\filters\AccessControl',
                 'rules'=>[
                     ['allow'=>true, 'roles'=>['@']],
