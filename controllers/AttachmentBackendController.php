@@ -1,14 +1,15 @@
 <?php
 namespace asinfotrack\yii2\attachments\controllers;
 
-use asinfotrack\yii2\attachments\models\search\AttachmentSearch;
-use asinfotrack\yii2\attachments\Module;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\FileHelper;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 use yii\web\NotFoundHttpException;
+use asinfotrack\yii2\attachments\Module;
+use asinfotrack\yii2\attachments\models\Attachment;
+use asinfotrack\yii2\attachments\models\search\AttachmentSearch;
 
 /**
  * Controller to manage attachments in the backend
