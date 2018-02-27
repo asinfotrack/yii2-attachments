@@ -1,15 +1,14 @@
 <?php
-
-use asinfotrack\yii2\attachments\models\Attachment;
-use asinfotrack\yii2\toolbox\widgets\grid\BooleanColumn;use yii\grid\GridView;
-use yii\helpers\ArrayHelper;
+use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Json;
+use yii\helpers\StringHelper;
 use rmrevin\yii\fontawesome\FA;
+use asinfotrack\yii2\toolbox\widgets\grid\BooleanColumn;
 use asinfotrack\yii2\toolbox\widgets\grid\AdvancedActionColumn;
 use asinfotrack\yii2\toolbox\widgets\grid\AdvancedDataColumn;
 use asinfotrack\yii2\toolbox\widgets\grid\IdColumn;
-use yii\helpers\Json;
-use yii\helpers\StringHelper;
+use asinfotrack\yii2\attachments\Module;
 
 /* @var $this \yii\web\View */
 /* @var $dataProvider \yii\data\ActiveDataProvider */
@@ -18,7 +17,8 @@ use yii\helpers\StringHelper;
 $this->title = Yii::t('app', 'Attachments');
 
 $typeFilter = [];
-foreach (Attachment::find()->select('model_type')->distinct(true)->column() as $type) {
+$query = call_user_func([Module::getInstance()->classMap['attachmentModel'], 'find']);
+foreach ($query->select('model_type')->distinct(true)->column() as $type) {
 	$typeFilter[$type] = StringHelper::basename($type);
 }
 array_multisort($typeFilter);

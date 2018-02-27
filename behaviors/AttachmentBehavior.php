@@ -4,7 +4,7 @@ namespace asinfotrack\yii2\attachments\behaviors;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\db\BaseActiveRecord;
-use asinfotrack\yii2\attachments\models\Attachment;
+use asinfotrack\yii2\attachments\Module;
 
 class AttachmentBehavior extends \yii\base\Behavior
 {
@@ -60,7 +60,7 @@ class AttachmentBehavior extends \yii\base\Behavior
 	 */
 	public function getAttachmentQuery()
 	{
-		return Attachment::find()->subject($this->owner);
+		return call_user_func([Module::getInstance()->classMap['hyperlinkModel'], 'find'])->subject($this->owner);
 	}
 
 	/**

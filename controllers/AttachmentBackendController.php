@@ -4,12 +4,9 @@ namespace asinfotrack\yii2\attachments\controllers;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\FileHelper;
-use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 use yii\web\NotFoundHttpException;
 use asinfotrack\yii2\attachments\Module;
-use asinfotrack\yii2\attachments\models\Attachment;
-use asinfotrack\yii2\attachments\models\search\AttachmentSearch;
 
 /**
  * Controller to manage attachments in the backend
@@ -47,7 +44,7 @@ class AttachmentBackendController extends \yii\web\Controller
 
 	public function actionIndex()
 	{
-		$searchModel = new AttachmentSearch();
+		$searchModel = Yii::createObject(Module::getInstance()->classMap['attachmentSearchModel']);
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 		return $this->render(Module::getInstance()->backendViews['index'], [
@@ -124,12 +121,12 @@ class AttachmentBackendController extends \yii\web\Controller
 	 * If the model is not found, a 404 HTTP exception will be thrown.
 	 *
 	 * @param integer $id
-	 * @return Attachment the loaded model
+	 * @return \asinfotrack\yii2\attachments\models\Attachment the loaded model
 	 * @throws NotFoundHttpException if the model cannot be found
 	 */
 	protected function findModel($id)
 	{
-		$model = Attachment::findOne($id);
+		$model = call_user_func([Module::getInstance()->classMap['attachmentModel'], 'findOne'], $id);
 		if ($model === null) {
 			$msg = Yii::t('app', 'No attachment found with `{value}`', ['value'=>$id]);
 			throw new NotFoundHttpException($msg);

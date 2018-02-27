@@ -1,12 +1,12 @@
 <?php
 namespace asinfotrack\yii2\attachments\components;
 
+use asinfotrack\yii2\attachments\Module;
 use Yii;
 use yii\base\InvalidCallException;
 use yii\base\NotSupportedException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
-use asinfotrack\yii2\attachments\models\Attachment;
 
 class AvatarAction extends \yii\base\Action
 {
@@ -36,7 +36,8 @@ class AvatarAction extends \yii\base\Action
 		}
 
 		//fetch and validate model
-		$model = Attachment::find()->where(['attachment.id'=>$args['id']])->isAvatar(true)->one();
+		$query = call_user_func([Module::getInstance()->classMap['attachmentModel'], 'find']);
+		$model = $query->where(['attachment.id'=>$args['id']])->isAvatar(true)->one();
 		if ($model === null) {
 			$msg = Yii::t('app', 'No attachment with the id `{id}` found or it is not marked as an avatar', ['id'=>$args['id']]);
 			throw new NotFoundHttpException($msg);

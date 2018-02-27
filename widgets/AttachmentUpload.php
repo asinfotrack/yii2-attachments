@@ -3,14 +3,13 @@ namespace asinfotrack\yii2\attachments\widgets;
 
 use Yii;
 use yii\base\InvalidConfigException;
-use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 use rmrevin\yii\fontawesome\FA;
-use asinfotrack\yii2\toolbox\widgets\Button;
 use asinfotrack\yii2\attachments\models\Attachment;
+use asinfotrack\yii2\toolbox\widgets\Button;
 use asinfotrack\yii2\attachments\Module;
 
 /**

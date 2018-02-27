@@ -8,7 +8,6 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use rmrevin\yii\fontawesome\FA;
 use asinfotrack\yii2\attachments\Module;
-use asinfotrack\yii2\attachments\models\search\AttachmentSearch;
 use asinfotrack\yii2\toolbox\widgets\grid\AdvancedDataColumn;
 use asinfotrack\yii2\toolbox\widgets\grid\BooleanColumn;
 use asinfotrack\yii2\toolbox\widgets\grid\IdColumn;
@@ -89,7 +88,7 @@ class AttachmentList extends \yii\base\Widget
 		}
 
 		//prepare data provider and search model
-		$this->searchModel = new AttachmentSearch();
+		$this->searchModel = Yii::createObject(Module::getInstance()->classMap['attachmentSearchModel']);
 		$this->dataProvider = $this->searchModel->search(Yii::$app->request->getQueryParams(), $query);
 
 		//prepare options

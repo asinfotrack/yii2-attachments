@@ -20,6 +20,14 @@ class Module extends \yii\base\Module
 {
 
 	/**
+	 * @var array array containing the classes to use for the individual model components.
+	 */
+	public $classMap = [
+		'attachmentModel'=>'asinfotrack\yii2\attachments\models\Attachment',
+		'attachmentSearchModel'=>'asinfotrack\yii2\attachments\models\search\AttachmentSearch',
+	];
+
+	/**
 	 * @var string the alias where the attachments will be saved. If the folder does not
 	 * exist upon first upload, it will be created implicitly.
 	 */
@@ -140,6 +148,7 @@ class Module extends \yii\base\Module
 	{
 		return $form->field($model, $attribute)->fileinput();
 	}
+
 	/**
 	 * Validates a subject model
 	 *

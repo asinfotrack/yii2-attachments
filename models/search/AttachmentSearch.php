@@ -1,10 +1,9 @@
 <?php
 namespace asinfotrack\yii2\attachments\models\search;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use asinfotrack\yii2\attachments\models\Attachment;
+use asinfotrack\yii2\attachments\Module;
 
 /**
  * The search model for the attachments
@@ -32,7 +31,9 @@ class AttachmentSearch extends \asinfotrack\yii2\attachments\models\Attachment
 
 	public function search($params, $query=null)
 	{
-		if ($query === null) $query = Attachment::find();
+		if ($query === null) {
+			$query = call_user_func(Module::getInstance()->classMap['attachmentModel'], 'find');
+		}
 		$dataProvider = new ActiveDataProvider([
 			'query'=>$query,
 			'sort'=>[
