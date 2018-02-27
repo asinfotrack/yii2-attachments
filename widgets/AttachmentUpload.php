@@ -48,7 +48,7 @@ class AttachmentUpload extends \yii\base\Widget
 	/**
 	 * @var string the form view to use
 	 */
-	public $formView = '@vendor/asinfotrack/yii2-attachments/views/attachment/partials/_form';
+	public $formView = '@vendor/asinfotrack/yii2-attachments/views/attachment-backend/partials/_form';
 
 	/**
 	 * @var bool whether or not to use a modal (defaults to true)
