@@ -136,7 +136,7 @@ class AttachmentUpload extends \yii\base\Widget
 	public function generateShowModalButton($label=null, $options=[]) {
 		Html::addCssClass($options, 'btn-primary');
 		$options['data']['toggle'] = 'modal';
-		$options['data']['target'] = $this->modalId;
+		$options['data']['target'] = '#'.$this->modalId;
 
 		return Button::widget([
 			'label'=>$label === null ? $this->modalTitle : $label,
