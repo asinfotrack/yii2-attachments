@@ -162,7 +162,7 @@ class AttachmentList extends \yii\base\Widget
 			],
 			[
 				'class'=>AdvancedActionColumn::className(),
-				'label'=>Yii::t('app', 'Download'),
+				'header'=>Yii::t('app', 'Download'),
 				'template'=>'{download}',
 				'buttons'=>[
 					'download'=>function ($url, $model, $key) {

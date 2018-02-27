@@ -122,7 +122,7 @@ class AttachmentUpload extends \yii\base\Widget
 	public function run()
 	{
 		if ($this->useModal) $this->renderModalBegin();
-		$this->renderContent();
+		echo $this->renderContent();
 		if ($this->useModal) $this->renderModalEnd();
 	}
 
@@ -153,7 +153,7 @@ class AttachmentUpload extends \yii\base\Widget
 	protected function renderContent()
 	{
 		return $this->view->render($this->formView, [
-			'model'=>$this->subject,
+			'model'=>$this->model,
 		]);
 	}
 
