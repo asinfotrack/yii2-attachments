@@ -153,14 +153,6 @@ class Attachment extends \yii\db\ActiveRecord
 	}
 
 	/**
-	 * @inheritdoc
-	 */
-	public function transactions()
-	{
-		return [ActiveRecord::SCENARIO_DEFAULT=>ActiveRecord::OP_ALL];
-	}
-
-	/**
 	 * Returns an instance of the query-type for this model
 	 * @return \asinfotrack\yii2\attachments\models\query\AttachmentQuery
 	 */
