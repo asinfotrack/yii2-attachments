@@ -2,6 +2,7 @@
 namespace asinfotrack\yii2\attachments\models\query;
 
 use asinfotrack\yii2\toolbox\helpers\PrimaryKey;
+use yii\helpers\Json;
 
 /**
  * Query class for the attachments providing the most common named scopes
@@ -22,7 +23,7 @@ class AttachmentQuery extends \yii\db\ActiveQuery
 	public function subject($model)
 	{
 		$this->modelTypes($model);
-		$this->andWhere(['attachment.foreign_pk'=>static::createPrimaryKeyJson($model)]);
+		$this->andWhere(['attachment.foreign_pk'=>Json::encode($model->getPrimaryKey(true))]);
 		return $this;
 	}
 
@@ -81,20 +82,6 @@ class AttachmentQuery extends \yii\db\ActiveQuery
 	{
 		$this->andWhere(['attachment.is_avatar'=>$isAvatar ? 1 : 0]);
 		return $this;
-	}
-
-	/**
-	 * Creates the json-representation of the pk (array in the format attribute=>value)
-	 * @see \asinfotrack\yii2\toolbox\helpers\PrimaryKey::asJson()
-	 *
-	 * @param \yii\db\ActiveRecord $model the model
-	 * @return string json-representation of the pk-array
-	 * @throws \yii\base\InvalidParamException if the model is not of type ActiveRecord
-	 * @throws \yii\base\InvalidConfigException if the models pk is empty or invalid
-	 */
-	protected static function createPrimaryKeyJson($model)
-	{
-		return PrimaryKey::asJson($model);
 	}
 
 }

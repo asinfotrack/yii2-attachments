@@ -60,7 +60,7 @@ class AttachmentBehavior extends \yii\base\Behavior
 	 */
 	public function getAttachmentQuery()
 	{
-		return call_user_func([Module::getInstance()->classMap['hyperlinkModel'], 'find'])->subject($this->owner);
+		return call_user_func([Module::getInstance()->classMap['attachmentModel'], 'find'])->subject($this->owner);
 	}
 
 	/**

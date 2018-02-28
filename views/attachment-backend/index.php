@@ -35,6 +35,7 @@ array_multisort($typeFilter);
 		[
 			'attribute'=>'subject',
 			'columnWidth'=>15,
+			'format'=>'html',
 			'filter'=>$typeFilter,
 			'value'=>function ($model, $key, $index, $column) {
 				$lines = [

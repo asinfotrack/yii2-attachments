@@ -138,7 +138,8 @@ class AttachmentUpload extends \yii\base\Widget
 		$options['data']['target'] = '#'.$this->modalId;
 
 		return Button::widget([
-			'label'=>$label === null ? $this->modalTitle : $label,
+			'icon'=>'upload',
+			'label'=>$label === null ? Yii::t('app', 'Upload attachment') : $label,
 			'encodeLabel'=>false,
 			'options'=>$options,
 		]);
@@ -162,13 +163,12 @@ class AttachmentUpload extends \yii\base\Widget
 	protected function renderModalBegin()
 	{
 		$modalOptions = [];
-		if ($this->showModalImmediately) {
-			$modalOptions['data']['show-immediately'] = true;
-		}
+		$modalClientOptions = $this->showModalImmediately ? ['show'=>true] : [];
 
 		$this->modal = Modal::begin([
 			'id'=>$this->modalId,
 			'options'=>$modalOptions,
+			'clientOptions'=>$modalClientOptions,
 			'header'=>Html::tag('h4', $this->modalTitle),
 			'footer'=>$this->modalFooter,
 		]);

@@ -86,8 +86,8 @@ class Attachment extends \yii\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			[['model_type','foreign_pk','filename','extension','mime_type','title','desc'], 'trim'],
-			[['model_type','foreign_pk','filename','extension','mime_type','title','desc'], 'default'],
+			[['model_type','filename','extension','mime_type','title','desc'], 'trim'],
+			[['model_type','filename','extension','mime_type','title','desc'], 'default'],
 			[['is_avatar'], 'default', 'value'=>false],
 
 			[['model_type','foreign_pk','filename','mime_type','size'], 'required'],
@@ -97,7 +97,7 @@ class Attachment extends \yii\db\ActiveRecord
 
 			[['size'], 'integer', 'min'=>0],
 			[['is_avatar'], 'boolean'],
-			[['model_type','foreign_pk','filename','extension','mime_type','title'], 'string', 'max'=>255],
+			[['model_type','filename','extension','mime_type','title'], 'string', 'max'=>255],
 			[['desc'], 'string'],
 
 			[['is_avatar'], function ($attribute, $params) {
@@ -269,6 +269,7 @@ class Attachment extends \yii\db\ActiveRecord
 
 		try {
 			if (!$this->getFileExists() || !unlink($this->absolutePath)) {
+				$this->addError('absolutePath', 'File does not exist or cannot be deleted.');
 				return false;
 			}
 		} catch (\Exception $e) {
@@ -349,7 +350,7 @@ class Attachment extends \yii\db\ActiveRecord
 		Module::validateSubject($subject);
 
 		$this->model_type = $subject->className();
-		$this->foreign_pk = PrimaryKey::asJson($subject);
+		$this->foreign_pk = $subject->getPrimaryKey(true);
 		$this->subject = $subject;
 	}
 
