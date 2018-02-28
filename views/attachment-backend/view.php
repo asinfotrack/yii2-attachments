@@ -55,6 +55,6 @@ $this->title = Yii::t('app', $model->displayTitle);
 		'mime_type',
 		'is_avatar:boolean',
 		'title',
-		'desc',
+		'description',
 	],
 ]) ?>

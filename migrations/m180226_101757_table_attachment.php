@@ -25,7 +25,7 @@ class m180226_101757_table_attachment extends \asinfotrack\yii2\toolbox\console\
 			'mime_type'=>$this->string()->notNull(),
 			'size'=>$this->integer()->notNull(),
 			'title'=>$this->string(),
-			'desc'=>$this->text(),
+			'description'=>$this->text(),
 		]);
 		$this->createIndex('IN_attachment_model_type', '{{%attachment}}', ['model_type']);
 		$this->createIndex('IN_attachment_model_type_foreign_pk', '{{%attachment}}', ['model_type','foreign_pk']);

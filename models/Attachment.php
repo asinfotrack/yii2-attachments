@@ -86,8 +86,8 @@ class Attachment extends \yii\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			[['model_type','filename','extension','mime_type','title','desc'], 'trim'],
-			[['model_type','filename','extension','mime_type','title','desc'], 'default'],
+			[['model_type','filename','extension','mime_type','title','description'], 'trim'],
+			[['model_type','filename','extension','mime_type','title','description'], 'default'],
 			[['is_avatar'], 'default', 'value'=>false],
 
 			[['model_type','foreign_pk','filename','mime_type','size'], 'required'],
@@ -98,7 +98,7 @@ class Attachment extends \yii\db\ActiveRecord
 			[['size'], 'integer', 'min'=>0],
 			[['is_avatar'], 'boolean'],
 			[['model_type','filename','extension','mime_type','title'], 'string', 'max'=>255],
-			[['desc'], 'string'],
+			[['description'], 'string'],
 
 			[['is_avatar'], function ($attribute, $params) {
 				if (!$this->{$attribute}) return;
@@ -138,7 +138,7 @@ class Attachment extends \yii\db\ActiveRecord
 			'mime_type'=>Yii::t('app', 'Mime type'),
 			'size'=>Yii::t('app', 'File size'),
 			'title'=>Yii::t('app', 'Title'),
-			'desc'=>Yii::t('app', 'Description'),
+			'description'=>Yii::t('app', 'Description'),
 			'created'=>Yii::t('app', 'Created'),
 			'created_by'=>Yii::t('app', 'Created by'),
 			'updated'=>Yii::t('app', 'Updated'),
