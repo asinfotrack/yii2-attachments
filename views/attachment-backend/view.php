@@ -41,6 +41,7 @@ $this->title = Yii::t('app', $model->displayTitle);
 		],
 		[
 			'attribute'=>'subject',
+			'format'=>'html',
 			'value'=>implode(Html::tag('br'), [
 				Html::tag('span', StringHelper::basename($model->model_type)),
 				Html::tag('code', Json::encode($model->foreign_pk))
@@ -52,7 +53,7 @@ $this->title = Yii::t('app', $model->displayTitle);
 			'value'=>Yii::$app->formatter->asSize($model->size),
 		],
 		'mime_type',
-		'is_avatar:bool',
+		'is_avatar:boolean',
 		'title',
 		'desc',
 	],
