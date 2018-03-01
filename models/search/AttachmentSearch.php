@@ -20,7 +20,7 @@ class AttachmentSearch extends \asinfotrack\yii2\attachments\models\Attachment
 		return [
 			[['id','size','created','created_by','updated','updated_by'], 'integer'],
 			[['is_avatar'], 'boolean'],
-			[['model_type','foreign_pk','filename','extension','mime_type','title','desc'], 'safe'],
+			[['model_type','foreign_pk','filename','extension','mime_type','title','description'], 'safe'],
 		];
 	}
 
@@ -57,7 +57,7 @@ class AttachmentSearch extends \asinfotrack\yii2\attachments\models\Attachment
 				->andFilterWhere(['like', 'attachment.extension', $this->extension])
 				->andFilterWhere(['like', 'attachment.mime_type', $this->mime_type])
 				->andFilterWhere(['like', 'attachment.title', $this->title])
-				->andFilterWhere(['like', 'attachment.desc', $this->desc]);
+				->andFilterWhere(['like', 'attachment.description', $this->description]);
 		}
 
 		return $dataProvider;

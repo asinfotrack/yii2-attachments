@@ -21,7 +21,7 @@ $form = ActiveForm::begin([
 <fieldset>
 	<legend><?= Yii::t('app', 'Attachment information') ?></legend>
 	<?= $form->field($model, 'title')->textInput(['maxlength'=>true]) ?>
-	<?= $form->field($model, 'desc')->textarea(['rows'=>5]) ?>
+	<?= $form->field($model, 'description')->textarea(['rows'=>5]) ?>
 </fieldset>
 
 <fieldset>
