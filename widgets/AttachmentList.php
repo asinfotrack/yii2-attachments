@@ -93,7 +93,7 @@ class AttachmentList extends \yii\base\Widget
 
 		//prepare options
 		$this->options['id'] = $this->id;
-		Html::addCssClass($this->options, 'widget-attachment-list');
+		Html::addCssClass($this->options, 'grid-view widget-attachment-list');
 	}
 
 	/**
