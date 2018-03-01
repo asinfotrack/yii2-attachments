@@ -303,7 +303,7 @@ class Attachment extends \yii\db\ActiveRecord
 		}
 
 		$basePath = Yii::getAlias(Module::getInstance()->attachmentAlias);
-		$path = $basePath . DIRECTORY_SEPARATOR . $this->filename;
+		$path = $basePath . DIRECTORY_SEPARATOR . $this->id;
 		if (!empty($this->extension)) $path .= '.' . $this->extension;
 		return FileHelper::normalizePath($path);
 	}

@@ -165,7 +165,7 @@ class AttachmentList extends \yii\base\Widget
 				'template'=>'{download}',
 				'buttons'=>[
 					'download'=>function ($url, $model, $key) {
-						return Html::a(FA::icon('download'), ['attachment/download', 'id'=>$model->id]);
+						return Html::a(FA::icon('download'), ['attachments/attachment-backend/download', 'id'=>$model->id]);
 					},
 				],
 			],
