@@ -19,7 +19,7 @@ use asinfotrack\yii2\toolbox\helpers\PrimaryKey;
  *
  * @property integer $id
  * @property string $model_type
- * @property string $foreign_pk
+ * @property mixed[] $foreign_pk
  * @property bool $is_avatar
  * @property string $filename
  * @property string $extension
