@@ -7,6 +7,7 @@ use yii\base\InvalidCallException;
 use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
 use asinfotrack\yii2\attachments\behaviors\AttachmentBehavior;
+use asinfotrack\yii2\attachments\behaviors\AvatarBehavior;
 use asinfotrack\yii2\toolbox\helpers\ComponentConfig;
 
 /**
@@ -168,8 +169,9 @@ class Module extends \yii\base\Module
 			$msg = Yii::t('app', 'Can not add attachments to unsaved subjects');
 			throw new InvalidCallException($msg);
 		}
-		if (!ComponentConfig::hasBehavior($subject, AttachmentBehavior::className())) {
-			$msg = Yii::t('app', 'Subjects of attachments need to have the `AttachmentBehavior` attached');
+		if (!ComponentConfig::hasBehavior($subject, AttachmentBehavior::className()) && !ComponentConfig::hasBehavior($subject, AvatarBehavior::className())) {
+			if (!$throwException) return false;
+			$msg = Yii::t('app', 'Subjects of attachments need to have the `AttachmentBehavior` or `AvatarBehavior` attached');
 			throw new InvalidConfigException($msg);
 		}
 
