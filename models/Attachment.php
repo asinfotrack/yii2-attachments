@@ -102,14 +102,14 @@ class Attachment extends \yii\db\ActiveRecord
 
 			[['is_avatar'], function ($attribute, $params) {
 				if (!$this->{$attribute}) return;
-				if (!preg_match('/^image\/(jpg|png|gif)$/i', $this->mime_type)) {
+				if (!preg_match('/^image\/(jpg|jpeg|png|gif)$/i', $this->mime_type)) {
 					$msg = Yii::t('app', 'Only jpg, png and gif files can be used as attachments');
 					$this->addError($attribute, $msg);
 				}
 			}],
 
 			[['mime_type'], function ($attribute, $params) {
-				if (!empty($this->subject->allowedMimeTypes)) {
+				if (!empty($this->subject->mimeTypes)) {
 					$fv = new FileValidator(['mimeTypes'=>$this->subject->mimeTypes]);
 					$fv->validateAttribute($this, $attribute);
 				}
@@ -230,12 +230,9 @@ class Attachment extends \yii\db\ActiveRecord
 			}
 
 			//save file
-			$targetPath = $this->getAbsolutePath();
-			if (!$this->uploadedFile->saveAs($targetPath)) {
+			if (!$this->uploadedFile->saveAs($this->getAbsolutePath())) {
 				return false;
 			}
-
-			return $this->uploadedFile->saveAs($this->absolutePath);
 		}
 
 		//set new avatar if necessary

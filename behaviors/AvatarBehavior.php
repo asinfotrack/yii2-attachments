@@ -5,21 +5,13 @@ class AvatarBehavior extends \asinfotrack\yii2\attachments\behaviors\AttachmentB
 {
 
 	/**
-	 * @var string[] holds the allowed mime types for attachments
-	 */
-	public $avatarMimeTypes = [
-		'image/jpg',
-		'image/png',
-	];
-
-	/**
 	 * Creates an active query instance with the proper scope for this behavior
 	 *
 	 * @return \asinfotrack\yii2\attachments\models\query\AttachmentQuery the active query instance
 	 */
 	public function getAvatarQuery()
 	{
-		return $this->getAttachmentQuery()->isAvatar(true)->mimeTypes($this->avatarMimeTypes);
+		return $this->getAttachmentQuery()->isAvatar(true);
 	}
 
 	/**
