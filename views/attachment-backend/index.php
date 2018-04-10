@@ -54,7 +54,7 @@ array_multisort($typeFilter);
 			'attribute'=>'size',
 			'columnWidth'=>10,
 			'value'=>function ($model, $key, $index, $column) {
-				return Yii::$app->formatter->asSize($model->size);
+				return Yii::$app->formatter->asShortSize($model->size);
 			},
 		],
 		'title',
@@ -68,7 +68,7 @@ array_multisort($typeFilter);
 			'template'=>'{download}',
 			'buttons'=>[
 				'download'=>function ($url, $model, $key) {
-					return Html::a(FA::icon('download'), ['attachment/download', 'id'=>$model->id]);
+					return Html::a(FA::icon('download'), ['attachment-backend/download', 'id'=>$model->id]);
 				},
 			],
 		],

@@ -11,27 +11,29 @@ use asinfotrack\yii2\toolbox\widgets\Button;
 /* @var $this \yii\web\View */
 /* @var $model \asinfotrack\yii2\attachments\models\Attachment */
 
-$this->title = Yii::t('app', $model->displayTitle);
+$this->title = $model->displayTitle;
 ?>
 
-<?= Button::widget([
-	'tagName'=>'a',
-	'icon'=>'list',
-	'label'=>Yii::t('app', 'All attachments'),
-	'options'=>[
-		'href'=>Url::to(['attachment-backend/index']),
-		'class'=>'btn btn-primary',
-	],
-]) ?>
-<?= Button::widget([
-	'tagName'=>'a',
-	'icon'=>'pencil',
-	'label'=>Yii::t('app', 'Update attachment'),
-	'options'=>[
-		'href'=>Url::to(['attachment-backend/update', 'id'=>$model->id]),
-		'class'=>'btn btn-primary',
-	],
-]) ?>
+<div class="buttons">
+	<?= Button::widget([
+		'tagName'=>'a',
+		'icon'=>'list',
+		'label'=>Yii::t('app', 'All attachments'),
+		'options'=>[
+			'href'=>Url::to(['attachment-backend/index']),
+			'class'=>'btn btn-primary',
+		],
+	]) ?>
+	<?= Button::widget([
+		'tagName'=>'a',
+		'icon'=>'pencil',
+		'label'=>Yii::t('app', 'Update attachment'),
+		'options'=>[
+			'href'=>Url::to(['attachment-backend/update', 'id'=>$model->id]),
+			'class'=>'btn btn-primary',
+		],
+	]) ?>
+</div>
 
 <?= DetailView::widget([
 	'model'=>$model,
@@ -50,7 +52,7 @@ $this->title = Yii::t('app', $model->displayTitle);
 		'filename',
 		[
 			'attribute'=>'size',
-			'value'=>Yii::$app->formatter->asSize($model->size),
+			'value'=>Yii::$app->formatter->asShortSize($model->size),
 		],
 		'mime_type',
 		'is_avatar:boolean',
