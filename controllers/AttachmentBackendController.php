@@ -80,8 +80,7 @@ class AttachmentBackendController extends \yii\web\Controller
 	{
 		$model = $this->findModel($id);
 		$model->delete();
-
-		return $this->redirect(['attachment-backend/index']);
+		return $this->redirect(Yii::$app->request->referrer ?? ['attachment-backend/index']);
 	}
 
 	public function actionDownload($id)
