@@ -115,7 +115,7 @@ class Attachment extends \yii\db\ActiveRecord
 				}
 			}],
 			[['size'], function ($attribute, $params) {
-				if ($this->subject->maxAttachmentSize > 0) {
+				if ($this->subject!=null && $this->subject->maxAttachmentSize > 0) {
 					$fv = new FileValidator(['maxSize'=>$this->subject->maxAttachmentSize]);
 					$fv->validateAttribute($this, $attribute);
 				}
@@ -179,11 +179,11 @@ class Attachment extends \yii\db\ActiveRecord
 		$resParent = parent::beforeValidate();
 
 		//get values from uploaded file
-		if ($this->uploadedFile !== null) {
-			if (!($this->uploadedFile instanceof UploadedFile)) {
-				$this->uploadedFile = UploadedFile::getInstance($this, 'uploadedFile');
-			}
 
+		if (!($this->uploadedFile instanceof UploadedFile)) {
+			$this->uploadedFile = UploadedFile::getInstance($this, 'uploadedFile');
+		}
+		if ($this->uploadedFile !== null) {
 			$this->filename = $this->uploadedFile->name;
 			$this->extension = strtolower($this->uploadedFile->extension);
 			$this->mime_type = FileHelper::getMimeType($this->uploadedFile->tempName);

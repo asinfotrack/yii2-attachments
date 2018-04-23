@@ -8,6 +8,7 @@ use asinfotrack\yii2\toolbox\widgets\Button;
 $this->title = Yii::t('app', 'Update attachment');
 ?>
 
+<div class="buttons">
 <?= Button::widget([
 	'tagName'=>'a',
 	'icon'=>'list',
@@ -26,5 +27,6 @@ $this->title = Yii::t('app', 'Update attachment');
 		'class'=>'btn btn-primary',
 	],
 ]) ?>
+</div>
 
 <?= $this->render('partials/_form', ['model'=>$model]) ?>
