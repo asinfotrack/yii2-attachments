@@ -26,7 +26,7 @@ use asinfotrack\yii2\toolbox\helpers\PrimaryKey;
  * @property string $mime_type
  * @property integer $size
  * @property string $title
- * @property string $desc
+ * @property string $description
  * @property integer $created
  * @property integer $created_by
  * @property integer $updated
