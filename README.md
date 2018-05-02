@@ -1,8 +1,6 @@
 # Yii2-attachments
 Yii2-attachments is a module and set of functionality to add attachments to a model in a generic way
 
-__WATCH OUT: this extension is still under development. Breaking changes can occur without notice until first release!__
-
 ## Installation
 
 ### Basic installation
