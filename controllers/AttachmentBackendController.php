@@ -1,6 +1,7 @@
 <?php
 namespace asinfotrack\yii2\attachments\controllers;
 
+use asinfotrack\yii2\toolbox\helpers\Url;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\helpers\FileHelper;
@@ -68,9 +69,12 @@ class AttachmentBackendController extends \yii\web\Controller
 		$loaded = $model->load(Yii::$app->request->post());
 
 		if ($loaded && $model->save()) {
-			return $this->redirect(['attachment-backend/view', 'id'=>$model->id]);
+			return $this->goBack(['attachment-backend/view', 'id'=>$model->id]);
 		}
 
+		if (!$loaded) {
+			Yii::$app->getUser()->setReturnUrl(Yii::$app->request->referrer);
+		}
 		return $this->render(Module::getInstance()->backendViews['update'], [
 			'model'=>$model,
 		]);

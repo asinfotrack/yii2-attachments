@@ -1,4 +1,6 @@
 <?php
+
+use asinfotrack\yii2\attachments\widgets\AttachmentUpload;
 use yii\helpers\Url;
 use asinfotrack\yii2\toolbox\widgets\Button;
 
@@ -29,4 +31,4 @@ $this->title = Yii::t('app', 'Update attachment');
 ]) ?>
 </div>
 
-<?= $this->render('partials/_form', ['model'=>$model]) ?>
+<?= $this->render('partials/_form', ['model'=>$model, 'mode'=> $model->is_avatar ? AttachmentUpload::MODE_AVATAR : AttachmentUpload::MODE_ATTACHMENT]) ?>
