@@ -1,4 +1,6 @@
 <?php
+
+use asinfotrack\yii2\toolbox\components\Icon;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -68,7 +70,7 @@ array_multisort($typeFilter);
 			'template'=>'{download}',
 			'buttons'=>[
 				'download'=>function ($url, $model, $key) {
-					return Html::a(FA::icon('download'), ['attachment-backend/download', 'id'=>$model->id]);
+					return Html::a(Icon::c('download'), ['attachment-backend/download', 'id'=>$model->id]);
 				},
 			],
 		],

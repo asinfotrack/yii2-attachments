@@ -1,6 +1,7 @@
 <?php
 namespace asinfotrack\yii2\attachments\widgets;
 
+use asinfotrack\yii2\toolbox\components\Icon;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\grid\GridView;
@@ -165,7 +166,7 @@ class AttachmentList extends \yii\base\Widget
 				'template'=>'{download}',
 				'buttons'=>[
 					'download'=>function ($url, $model, $key) {
-						return Html::a(FA::icon('download'), ['attachments/attachment-backend/download', 'id'=>$model->id]);
+						return Html::a(Icon::c('download'), ['attachments/attachment-backend/download', 'id'=>$model->id]);
 					},
 				],
 			],

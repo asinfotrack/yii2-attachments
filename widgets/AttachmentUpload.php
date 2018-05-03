@@ -1,6 +1,7 @@
 <?php
 namespace asinfotrack\yii2\attachments\widgets;
 
+use asinfotrack\yii2\toolbox\components\Icon;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\bootstrap\Modal;
@@ -110,7 +111,7 @@ class AttachmentUpload extends \yii\base\Widget
 				$this->modalId = Inflector::camel2id($subjectClass . $widgetClass);
 			}
 			if (empty($this->modalTitle)) {
-				$this->modalTitle = FA::icon('upload') . Html::tag('span', Yii::t('app', 'Upload attachment'));
+				$this->modalTitle = Icon::c('upload') . Html::tag('span', Yii::t('app', 'Upload attachment'));
 			}
 			if (empty($this->modalFooter)) {
 				$btn = Html::submitButton(Yii::t('app', 'Upload'), ['class'=>'btn btn-primary']);
