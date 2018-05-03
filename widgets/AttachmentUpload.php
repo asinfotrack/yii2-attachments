@@ -50,19 +50,14 @@ class AttachmentUpload extends \yii\base\Widget
 	public $formView = '@vendor/asinfotrack/yii2-attachments/views/attachment-backend/partials/_form';
 
 	/**
-	 * @var string the form view to use
-	 */
-	public $formViewAvatar = '@vendor/asinfotrack/yii2-attachments/views/attachment-backend/partials/_form_avatar';
-
-	/**
 	 * @var bool whether or not to use a modal (defaults to true)
 	 */
 	public $useModal = true;
 
 	/**
-	 * @var bool whether or not to use avatar mode for upload (simpler form view; defaults to false)
+	 * @var int sets the mode for the modal
 	 */
-	public $avatarMode = false;
+	public $mode = self::MODE_AVATAR_OR_ATTACHMENT;
 
 	/**
 	 * @var string the if for the modal (if rendered with modal)
@@ -84,6 +79,11 @@ class AttachmentUpload extends \yii\base\Widget
 	 * a regular submit-button for the form
 	 */
 	public $modalFooter;
+
+	public const MODE_AVATAR = 10;
+	public const MODE_ATTACHMENT = 20;
+	public const MODE_AVATAR_OR_ATTACHMENT = 30;
+
 
 	/**
 	 * @inheritdoc
@@ -156,9 +156,10 @@ class AttachmentUpload extends \yii\base\Widget
 	 */
 	protected function renderContent()
 	{
-		$formView = $this->avatarMode ? $this->formViewAvatar : $this->formView;
-		return $this->view->render($formView, [
+
+		return $this->view->render($this->formView, [
 			'model'=>$this->model,
+			'mode'=>$this->mode,
 		]);
 	}
 
