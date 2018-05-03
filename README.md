@@ -60,6 +60,7 @@ For a full list of options, see the attributes of the classes within the module.
 ###### [v0.8.1](https://github.com/asinfotrack/yii2-attachments/releases/tag/0.8.1)
  - Breaking change: avatarMode is removed in asinfotrack\yii2\attachments\widgets\AttachmentUpload 
  - New mode in asinfotrack\yii2\attachments\widgets\AttachmentUpload
+ - Redirect to referrer after updating an attachment
 
 ###### [v0.8.0](https://github.com/asinfotrack/yii2-attachments/releases/tag/0.8.0)
 - main classes in a stable condition
