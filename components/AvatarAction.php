@@ -25,8 +25,11 @@ class AvatarAction extends \yii\base\Action
 	 */
 	public function run($id)
 	{
+
+
 		//fetch and validate model
 		$query = call_user_func([Module::getInstance()->classMap['attachmentModel'], 'find']);
+		/** @var \asinfotrack\yii2\attachments\models\Attachment $model */
 		$model = $query->where(['attachment.id'=>$id])->isAvatar(true)->one();
 		if ($model === null) {
 			$msg = Yii::t('app', 'No attachment with the id `{id}` found or it is not marked as an avatar', ['id'=>$id]);
@@ -40,7 +43,8 @@ class AvatarAction extends \yii\base\Action
 
 		//prepare the image
 		if (is_callable($this->imagePreparationCallback)) {
-			return call_user_func($this->imagePreparationCallback, $model->absolutePath);
+
+			return call_user_func($this->imagePreparationCallback, $model->absolutePath, $model->subject);
 		} else {
 			$response->getHeaders()->set('Content-Length', $model->size);
 			return file_get_contents($model->absolutePath);
