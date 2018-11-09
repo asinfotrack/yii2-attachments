@@ -20,6 +20,7 @@ use asinfotrack\yii2\toolbox\helpers\PrimaryKey;
  * @property integer $id
  * @property string $model_type
  * @property mixed[] $foreign_pk
+ * @property integer $ordering
  * @property bool $is_avatar
  * @property string $filename
  * @property string $extension
@@ -36,6 +37,8 @@ use asinfotrack\yii2\toolbox\helpers\PrimaryKey;
  * @property string $absolutePath readonly
  * @property bool $fileExists
  * @property \yii\db\ActiveRecord $subject readonly
+ * @property bool $isOrderedFirst readonly
+ * @property bool $isOrderedLast readonly
  *
  * @property \yii\web\IdentityInterface $createdBy
  * @property \yii\web\IdentityInterface $updatedBy
@@ -88,9 +91,18 @@ class Attachment extends \yii\db\ActiveRecord
 		return [
 			[['model_type','filename','extension','mime_type','title','description'], 'trim'],
 			[['model_type','filename','extension','mime_type','title','description'], 'default'],
+			[['ordering'], 'default', 'value'=>function($model, $attribute) {
+				$maxOrdering = Attachment::find()->select(['MAX(attachment.ordering)'])->subject($this->subject)->scalar();
+				if ($maxOrdering !== false) {
+					$ordering = intval($maxOrdering) + 1;
+				} else {
+					$ordering = 1;
+				}
+				return $ordering;
+			}, 'when'=>function ($model) { return $model->isNewRecord; }],
 			[['is_avatar'], 'default', 'value'=>false],
 
-			[['model_type','foreign_pk','filename','mime_type','size'], 'required'],
+			[['model_type','foreign_pk','ordering','filename','mime_type','size'], 'required'],
 			[['uploadedFile'], 'file', 'skipOnEmpty'=>false, 'when'=>function($model) {
 				return $model->isNewRecord;
 			}],
@@ -132,6 +144,7 @@ class Attachment extends \yii\db\ActiveRecord
 			'id'=>Yii::t('app', 'ID'),
 			'model_type'=>Yii::t('app', 'Table name'),
 			'foreign_pk'=>Yii::t('app', 'Foreign PK'),
+			'ordering'=>Yii::t('app', 'Ordering'),
 			'is_avatar'=>Yii::t('app', 'Avatar'),
 			'filename'=>Yii::t('app', 'Filename'),
 			'extension'=>Yii::t('app', 'Extension'),
@@ -335,6 +348,32 @@ class Attachment extends \yii\db\ActiveRecord
 		}
 
 		return $this->subject;
+	}
+
+	/**
+	 * Magic getter to determine if this attachment is ordered first
+	 *
+	 * @return bool true if it is the first ordered model of the subject
+	 */
+	public function getIsOrderedFirst()
+	{
+		if ($this->isNewRecord) {
+			throw new InvalidCallException(Yii::t('app', 'Can not determine if attachment is ordered first on unsaved attachments'));
+		}
+		return intval($this->ordering) === 1;
+	}
+
+	/**
+	 * Magic getter to determine if this attachment is ordered last
+	 *
+	 * @return bool true if this is the last ordered attachment of the subject
+	 */
+	public function getIsOrderedLast()
+	{
+		if ($this->isNewRecord) {
+			throw new InvalidCallException(Yii::t('app', 'Can not determine if attachment is ordered last on unsaved attachments'));
+		}
+		return !Attachment::find()->subject($this->subject)->andWhere(['>', ['attachment.ordering'=>$this->ordering]])->exists();
 	}
 
 	/**

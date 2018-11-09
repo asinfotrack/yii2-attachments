@@ -1,11 +1,9 @@
 <?php
-
-use asinfotrack\yii2\toolbox\components\Icon;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\helpers\StringHelper;
-use rmrevin\yii\fontawesome\FA;
+use asinfotrack\yii2\toolbox\components\Icon;
 use asinfotrack\yii2\toolbox\widgets\grid\BooleanColumn;
 use asinfotrack\yii2\toolbox\widgets\grid\AdvancedActionColumn;
 use asinfotrack\yii2\toolbox\widgets\grid\AdvancedDataColumn;
@@ -48,6 +46,11 @@ array_multisort($typeFilter);
 			},
 		],
 		[
+			'attribute'=>'ordering',
+			'columnWidth'=>5,
+			'textAlignAll'=>AdvancedDataColumn::TEXT_CENTER,
+		],
+		[
 			'class'=>AdvancedDataColumn::className(),
 			'attribute'=>'filename',
 			'columnWidth'=>20,
@@ -66,11 +69,38 @@ array_multisort($typeFilter);
 		],
 		[
 			'class'=>AdvancedActionColumn::className(),
+			'header'=>Yii::t('app', 'Order'),
+			'template'=>function ($model, $key, $index) {
+				/* @var $model \asinfotrack\yii2\attachments\models\Attachment */
+				$buttons = [];
+				if (!$model->isOrderedFirst) $buttons[] = '{up}';
+				if (!$model->isOrderedLast) $buttons[] = '{down}';
+				return implode(' ', $buttons);
+			},
+			'buttons'=>[
+				'up'=>function ($url, $model, $key) {
+					return Html::a(Icon::c('arrow-up'), ['attachments/attachment-backend/move-up', 'id'=>$model->id], [
+						'title'=>Yii::t('app', 'Move up'),
+						'aria-label'=>Yii::t('app', 'Move up'),
+						'data-pjax'=>0,
+					]);
+				},
+				'down'=>function ($url, $model, $key) {
+					return Html::a(Icon::c('arrow-down'), ['attachments/attachment-backend/move-down', 'id'=>$model->id], [
+						'title'=>Yii::t('app', 'Move down'),
+						'aria-label'=>Yii::t('app', 'Move down'),
+						'data-pjax'=>0,
+					]);
+				},
+			],
+		],
+		[
+			'class'=>AdvancedActionColumn::className(),
 			'header'=>Yii::t('app', 'Download'),
 			'template'=>'{download}',
 			'buttons'=>[
 				'download'=>function ($url, $model, $key) {
-					return Html::a(Icon::c('download'), ['attachment-backend/download', 'id'=>$model->id]);
+					return Html::a(Icon::c('download'), ['attachments/attachment-backend/download', 'id'=>$model->id]);
 				},
 			],
 		],

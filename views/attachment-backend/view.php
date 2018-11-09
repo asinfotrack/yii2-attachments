@@ -49,6 +49,7 @@ $this->title = $model->displayTitle;
 				Html::tag('code', Json::encode($model->foreign_pk))
 			]),
 		],
+		'ordering',
 		'filename',
 		[
 			'attribute'=>'size',

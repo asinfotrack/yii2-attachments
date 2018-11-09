@@ -144,6 +144,11 @@ class AttachmentList extends \yii\base\Widget
 				'attribute'=>'id',
 			],
 			[
+				'attribute'=>'ordering',
+				'columnWidth'=>5,
+				'textAlignAll'=>AdvancedDataColumn::TEXT_CENTER,
+			],
+			[
 				'class'=>AdvancedDataColumn::className(),
 				'attribute'=>'filename',
 				'columnWidth'=>20,
@@ -159,6 +164,34 @@ class AttachmentList extends \yii\base\Widget
 			[
 				'class'=>BooleanColumn::className(),
 				'attribute'=>'is_avatar',
+			],
+
+			[
+				'class'=>AdvancedActionColumn::className(),
+				'header'=>Yii::t('app', 'Order'),
+				'template'=>function ($model, $key, $index) {
+					/* @var $model \asinfotrack\yii2\attachments\models\Attachment */
+					$buttons = [];
+					if (!$model->isOrderedFirst) $buttons[] = '{up}';
+					if (!$model->isOrderedLast) $buttons[] = '{down}';
+					return implode(' ', $buttons);
+				},
+				'buttons'=>[
+					'up'=>function ($url, $model, $key) {
+						return Html::a(Icon::c('arrow-up'), ['attachments/attachment-backend/move-up', 'id'=>$model->id], [
+							'title'=>Yii::t('app', 'Move up'),
+							'aria-label'=>Yii::t('app', 'Move up'),
+							'data-pjax'=>0,
+						]);
+					},
+					'down'=>function ($url, $model, $key) {
+						return Html::a(Icon::c('arrow-down'), ['attachments/attachment-backend/move-down', 'id'=>$model->id], [
+							'title'=>Yii::t('app', 'Move down'),
+							'aria-label'=>Yii::t('app', 'Move down'),
+							'data-pjax'=>0,
+						]);
+					},
+				]
 			],
 			[
 				'class'=>AdvancedActionColumn::className(),

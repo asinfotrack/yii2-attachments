@@ -15,6 +15,44 @@ class AttachmentQuery extends \yii\db\ActiveQuery
 {
 
 	/**
+	 * @inheritdoc
+	 */
+	public function prepare($builder)
+	{
+		//add default ordering if none is set explicitly
+		if (empty($this->orderBy)) {
+			$this->orderSubject();
+			$this->orderOrdering();
+		}
+
+		return parent::prepare($builder);
+	}
+
+	/**
+	 * Named scope to return the attachments sorted by their subject (model_type, foreign_pk)
+	 *
+	 * @return \asinfotrack\yii2\attachments\models\query\AttachmentQuery self for chaining
+	 */
+	public function orderSubject()
+	{
+		$this->addOrderBy(['attachment.model_type'=>SORT_ASC, 'attachment.foreign_pk'=>SORT_ASC]);
+
+		return $this;
+	}
+
+	/**
+	 * Named scope to return the attachments sorted by their ordering
+	 *
+	 * @return \asinfotrack\yii2\attachments\models\query\AttachmentQuery self for chaining
+	 */
+	public function orderOrdering()
+	{
+		$this->addOrderBy(['attachment.ordering'=>SORT_ASC]);
+
+		return $this;
+	}
+
+	/**
 	 * Named scope to filter by subject
 	 *
 	 * @param \yii\db\ActiveRecord $model the subject model

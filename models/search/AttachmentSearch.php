@@ -18,7 +18,7 @@ class AttachmentSearch extends \asinfotrack\yii2\attachments\models\Attachment
 	public function rules()
 	{
 		return [
-			[['id','size','created','created_by','updated','updated_by'], 'integer'],
+			[['id','ordering','size','created','created_by','updated','updated_by'], 'integer'],
 			[['is_avatar'], 'boolean'],
 			[['model_type','foreign_pk','filename','extension','mime_type','title','description'], 'safe'],
 		];
@@ -41,13 +41,14 @@ class AttachmentSearch extends \asinfotrack\yii2\attachments\models\Attachment
 
 		if ($this->load($params) && $this->validate()) {
 			$query->andFilterWhere([
-				'attachment.id' => $this->id,
-				'attachment.is_avatar' => $this->is_avatar,
-				'attachment.size' => $this->size,
-				'attachment.created' => $this->created,
-				'attachment.created_by' => $this->created_by,
-				'attachment.updated' => $this->updated,
-				'attachment.updated_by' => $this->updated_by,
+				'attachment.id'=>$this->id,
+				'attachment.ordering'=>$this->ordering,
+				'attachment.is_avatar'=>$this->is_avatar,
+				'attachment.size'=>$this->size,
+				'attachment.created'=>$this->created,
+				'attachment.created_by'=>$this->created_by,
+				'attachment.updated'=>$this->updated,
+				'attachment.updated_by'=>$this->updated_by,
 			]);
 
 			$query

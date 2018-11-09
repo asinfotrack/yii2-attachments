@@ -1,13 +1,16 @@
 <?php
 namespace asinfotrack\yii2\attachments\controllers;
 
+use asinfotrack\yii2\attachments\models\Attachment;
 use asinfotrack\yii2\toolbox\helpers\Url;
 use Yii;
+use yii\base\InvalidCallException;
 use yii\filters\VerbFilter;
 use yii\helpers\FileHelper;
 use yii\web\Response;
 use yii\web\NotFoundHttpException;
 use asinfotrack\yii2\attachments\Module;
+use yii\web\ServerErrorHttpException;
 
 /**
  * Controller to manage attachments in the backend
@@ -87,6 +90,52 @@ class AttachmentBackendController extends \yii\web\Controller
 		return $this->redirect(Yii::$app->request->referrer ?? ['attachment-backend/index']);
 	}
 
+	public function actionMoveUp($id)
+	{
+		/* @var $model \asinfotrack\yii2\attachments\models\Attachment */
+		/* @var $otherModel \asinfotrack\yii2\attachments\models\Attachment */
+
+		$model = $this->findModel($id);
+		if ($model->isOrderedFirst) {
+			throw new InvalidCallException(Yii::t('app', 'The attachment is already all the way up'));
+		}
+
+		$targetOrdering = intval($model->ordering - 1);
+		$otherModel = Attachment::find()->subject($model->subject)->andWhere(['attachment.ordering'=>$targetOrdering])->one();
+		if ($otherModel === null) {
+			throw new ServerErrorHttpException(Yii::t('app', 'Model to switch position with could not be found'));
+		}
+
+		if ($this->flipOrdering($model, $otherModel)) {
+			return $this->redirect(Yii::$app->request->referrer ?? ['attachment-backend/index']);
+		} else {
+			throw new ServerErrorHttpException(Yii::t('app', 'Error while updating ordering on attachments'));
+		}
+	}
+
+	public function actionMoveDown($id)
+	{
+		/* @var $model \asinfotrack\yii2\attachments\models\Attachment */
+		/* @var $otherModel \asinfotrack\yii2\attachments\models\Attachment */
+
+		$model = $this->findModel($id);
+		if ($model->isOrderedLast) {
+			throw new InvalidCallException(Yii::t('app', 'The attachment is already all the way down'));
+		}
+
+		$targetOrdering = intval($model->ordering + 1);
+		$otherModel = Attachment::find()->subject($model->subject)->andWhere(['attachment.ordering'=>$targetOrdering])->one();
+		if ($otherModel === null) {
+			throw new ServerErrorHttpException(Yii::t('app', 'Model to switch position with could not be found'));
+		}
+
+		if ($this->flipOrdering($model, $otherModel)) {
+			return $this->redirect(Yii::$app->request->referrer ?? ['attachment-backend/index']);
+		} else {
+			throw new ServerErrorHttpException(Yii::t('app', 'Error while updating ordering on attachments'));
+		}
+	}
+
 	public function actionDownload($id)
 	{
 		$model = $this->findModel($id);
@@ -135,6 +184,32 @@ class AttachmentBackendController extends \yii\web\Controller
 			throw new NotFoundHttpException($msg);
 		}
 		return $model;
+	}
+
+	/**
+	 * Flips the ordering of two attachment models in the db and returns the result. The operation
+	 * is done within a transaction to prevent partial modifications
+	 *
+	 * @param \asinfotrack\yii2\attachments\models\Attachment $modelA
+	 * @param \asinfotrack\yii2\attachments\models\Attachment $modelB
+	 * @return bool true upon success
+	 * @throws \yii\base\ErrorException
+	 * @throws \yii\db\Exception
+	 */
+	protected function flipOrdering($modelA, $modelB)
+	{
+		$orderingA = $modelA->ordering;
+		$modelA->ordering = $modelB->ordering;
+		$modelB->ordering = $orderingA;
+
+		$transaction = Yii::$app->db->beginTransaction();
+		if ($modelA->save(true, ['ordering']) && $modelB->save(true, ['ordering'])) {
+			$transaction->commit();
+			return true;
+		} else {
+			$transaction->rollBack();
+			return false;
+		}
 	}
 
 }
