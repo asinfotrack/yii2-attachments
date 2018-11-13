@@ -136,7 +136,7 @@ class AttachmentBackendController extends \yii\web\Controller
 		}
 	}
 
-	public function actionDownload($id)
+	public function actionDownload($id, $fileName)
 	{
 		$model = $this->findModel($id);
 		$response = Yii::$app->response;
