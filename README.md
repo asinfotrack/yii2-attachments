@@ -56,6 +56,14 @@ For a full list of options, see the attributes of the classes within the module.
 `asinfotrack\yii2\attachments\Module`. Some examples are provided below.
 
 ## Changelog
+###### [v0.8.4](https://github.com/asinfotrack/yii2-attachments/releases/tag/0.8.4)
+- added parameter to download action
+
+###### [v0.8.3](https://github.com/asinfotrack/yii2-attachments/releases/tag/0.8.3)
+- added attachment ordering
+
+###### [v0.8.2](https://github.com/asinfotrack/yii2-attachments/releases/tag/0.8.2)
+- added param to imagePreparationCallback
 
 ###### [v0.8.1](https://github.com/asinfotrack/yii2-attachments/releases/tag/0.8.1)
  - Breaking change: 
