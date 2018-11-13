@@ -18,6 +18,7 @@ class m181001_111757_ordering_of_attachments extends \asinfotrack\yii2\toolbox\c
 
 		$attachments = (new Query())
 			->select(['attachment.id', 'attachment.model_type', 'attachment.foreign_pk'])
+			->from('attachment')
 			->orderBy(['attachment.model_type'=>SORT_ASC, 'attachment.foreign_pk'=>SORT_ASC, 'attachment.created'=>SORT_ASC])
 			->all();
 

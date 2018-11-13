@@ -12,7 +12,6 @@ use yii\helpers\Json;
 use yii\validators\FileValidator;
 use yii\web\UploadedFile;
 use asinfotrack\yii2\attachments\Module;
-use asinfotrack\yii2\toolbox\helpers\PrimaryKey;
 
 /**
  * This is the model class for table "attachment".
@@ -36,14 +35,14 @@ use asinfotrack\yii2\toolbox\helpers\PrimaryKey;
  * @property string $displayTitle readonly
  * @property string $absolutePath readonly
  * @property bool $fileExists
- * @property \yii\db\ActiveRecord $subject readonly
+ * @property ActiveRecord $subject
  * @property bool $isOrderedFirst readonly
  * @property bool $isOrderedLast readonly
  *
  * @property \yii\web\IdentityInterface $createdBy
  * @property \yii\web\IdentityInterface $updatedBy
  */
-class Attachment extends \yii\db\ActiveRecord
+class Attachment extends ActiveRecord
 {
 
 	/**
@@ -367,13 +366,14 @@ class Attachment extends \yii\db\ActiveRecord
 	 * Magic getter to determine if this attachment is ordered last
 	 *
 	 * @return bool true if this is the last ordered attachment of the subject
+	 * @throws \yii\base\ErrorException
 	 */
 	public function getIsOrderedLast()
 	{
 		if ($this->isNewRecord) {
 			throw new InvalidCallException(Yii::t('app', 'Can not determine if attachment is ordered last on unsaved attachments'));
 		}
-		return !Attachment::find()->subject($this->subject)->andWhere(['>', ['attachment.ordering'=>$this->ordering]])->exists();
+		return !Attachment::find()->subject($this->getSubject())->andWhere(['>', 'attachment.ordering',$this->ordering])->exists();
 	}
 
 	/**
