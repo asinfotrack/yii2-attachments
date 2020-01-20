@@ -21,12 +21,12 @@
 	},
 
 	"require": {
-		"php": ">=5.4.0",
+		"php": ">=7.1.0",
 
 		"yiisoft/yii2": "~2.0.6",
 		"yiisoft/yii2-bootstrap": "~2.0.0",
 
-		"asinfotrack/yii2-toolbox": "~0.8.10"
+		"asinfotrack/yii2-toolbox": "~1.0.0"
 	},
 
 	"autoload": {

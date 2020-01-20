@@ -56,6 +56,10 @@ For a full list of options, see the attributes of the classes within the module.
 `asinfotrack\yii2\attachments\Module`. Some examples are provided below.
 
 ## Changelog
+
+###### [v1.0.0](https://github.com/asinfotrack/yii2-attachments/releases/tag/1.0.0)
+- dependency update (__potential breaking change!__)
+
 ###### [v0.8.4](https://github.com/asinfotrack/yii2-attachments/releases/tag/0.8.4)
 - added parameter to download action
 
