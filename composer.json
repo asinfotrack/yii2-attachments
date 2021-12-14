@@ -1,10 +1,17 @@
 {
 	"name": "asinfotrack/yii2-attachments",
 	"type": "yii2-extension",
-
 	"description": "Yii2-attachments is a module and set of functionality to add attachments to a model in a generic way",
-	"keywords": ["yii2", "attachment", "attachments", "module", "behavior", "widget", "bundle", "action"],
-
+	"keywords": [
+		"yii2",
+		"attachment",
+		"attachments",
+		"module",
+		"behavior",
+		"widget",
+		"bundle",
+		"action"
+	],
 	"license": "MIT",
 	"authors": [
 		{
@@ -13,22 +20,23 @@
 			"homepage": "http://www.asinfotrack.ch"
 		}
 	],
-
 	"minimum-stability": "stable",
 	"support": {
 		"source": "https://github.com/asinfotrack/yii2-attachments",
 		"issues": "https://github.com/asinfotrack/Yii2-attachments/issues"
 	},
-
 	"require": {
 		"php": ">=7.1.0",
-
 		"yiisoft/yii2": "~2.0.6",
 		"yiisoft/yii2-bootstrap": "~2.0.0",
-
 		"asinfotrack/yii2-toolbox": "~1.0.0"
 	},
-
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://asset-packagist.org"
+		}
+	],
 	"autoload": {
 		"psr-4": {
 			"asinfotrack\\yii2\\attachments\\": ""
