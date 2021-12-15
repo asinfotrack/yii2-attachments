@@ -5,6 +5,7 @@ use asinfotrack\yii2\attachments\models\Attachment;
 use asinfotrack\yii2\toolbox\helpers\Url;
 use Yii;
 use yii\base\InvalidCallException;
+use yii\db\Query;
 use yii\filters\VerbFilter;
 use yii\helpers\FileHelper;
 use yii\web\Response;
@@ -86,7 +87,29 @@ class AttachmentBackendController extends \yii\web\Controller
 	public function actionDelete($id)
 	{
 		$model = $this->findModel($id);
-		$model->delete();
+
+		$transaction = Yii::$app->db->beginTransaction();
+
+		// update sort index of attachments
+		$attachmentsToUpdate = Attachment::find()->subject($model->subject)->andWhere(['>', 'attachment.ordering', $model->ordering])->all();
+		if (!empty($attachmentsToUpdate)) {
+			foreach ($attachmentsToUpdate as $attachment) {
+				/** @var Attachment $attachment */
+				$attachment->ordering--;
+
+				if (!$attachment->save()) {
+					$transaction->rollBack();
+					throw new ServerErrorHttpException(Yii::t('app', 'Error while deleting attachment'));
+				}
+			}
+		}
+
+		if (false === $model->delete()) {
+			$transaction->rollBack();
+			throw new ServerErrorHttpException(Yii::t('app', 'Error while deleting attachment'));
+		}
+
+		$transaction->commit();
 		return $this->redirect(Yii::$app->request->referrer ?? ['attachment-backend/index']);
 	}
 
