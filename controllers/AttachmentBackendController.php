@@ -89,27 +89,30 @@ class AttachmentBackendController extends \yii\web\Controller
 		$model = $this->findModel($id);
 
 		$transaction = Yii::$app->db->beginTransaction();
+		try {
+			// update sort index of attachments
+			/** @var Attachment[] $attachmentsToUpdate */
+			$attachmentsToUpdate = Attachment::find()->subject($model->subject)->andWhere(['>', 'attachment.ordering', $model->ordering])->all();
+			if (!empty($attachmentsToUpdate)) {
+				foreach ($attachmentsToUpdate as $attachment) {
+					$attachment->ordering--;
 
-		// update sort index of attachments
-		$attachmentsToUpdate = Attachment::find()->subject($model->subject)->andWhere(['>', 'attachment.ordering', $model->ordering])->all();
-		if (!empty($attachmentsToUpdate)) {
-			foreach ($attachmentsToUpdate as $attachment) {
-				/** @var Attachment $attachment */
-				$attachment->ordering--;
-
-				if (!$attachment->save()) {
-					$transaction->rollBack();
-					throw new ServerErrorHttpException(Yii::t('app', 'Error while deleting attachment'));
+					if (!$attachment->save()) {
+						throw new ServerErrorHttpException(Yii::t('app', 'Error while deleting attachment'));
+					}
 				}
 			}
-		}
 
-		if (false === $model->delete()) {
+			if (false === $model->delete()) {
+				throw new ServerErrorHttpException(Yii::t('app', 'Error while deleting attachment'));
+			}
+
+			$transaction->commit();
+		} catch (\Exception $e) {
 			$transaction->rollBack();
-			throw new ServerErrorHttpException(Yii::t('app', 'Error while deleting attachment'));
+			throw $e;
 		}
 
-		$transaction->commit();
 		return $this->redirect(Yii::$app->request->referrer ?? ['attachment-backend/index']);
 	}
 

@@ -56,6 +56,9 @@ For a full list of options, see the attributes of the classes within the module.
 `asinfotrack\yii2\attachments\Module`. Some examples are provided below.
 
 ## Changelog
+###### [v1.0.1](https://github.com/asinfotrack/yii2-attachments/releases/tag/1.0.1)
+- fixed ordering bug
+
 
 ###### [v1.0.0](https://github.com/asinfotrack/yii2-attachments/releases/tag/1.0.0)
 - dependency update (__potential breaking change!__)
